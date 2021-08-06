@@ -27,7 +27,33 @@ async function validateProjectId(req, res, next) {
     }
 }
 
+function validateProject(req, res, next) {
+    const { name } = req.body
+    if (!name || !name.trim()) {
+        res.status(400).json({
+            message: 'name field required'
+        })
+    } else {
+        req.name = name.trim()
+        next()
+    }
+}
+
+function validateAction(req, res, next) {
+    const { description } = req.body
+    if (!description || !description.trim()) {
+        res.status(400).json({
+            message: 'description field required',
+        })
+    } else {
+        req.description = description.trim()
+        next()
+    }
+}
+
 module.exports = {
     validateProjectId,
     logger,
+    validateProject,
+    validateAction,
 }
